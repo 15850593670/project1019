@@ -8,8 +8,10 @@ var mainWindow = null;
 
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
-		height: 600,
-		width: 800
+		frame: false,
+		resizable: false,
+		height: 700,
+		width: 368
 	});
 
 	//mainWindow.loadURL('file:///home/david/Desktop/project1019/index.html')
