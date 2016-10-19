@@ -31,3 +31,30 @@ app.on('ready', () => {
 ipcMain.on('close-main-window', () => {
 	app.quit();
 })
+
+let settingsWindow = null
+
+ipcMain.on('open-settings-window', () => {
+	if(settingsWindow){
+		return
+	}
+
+	settingsWindow = new BrowserWindow({
+		frame: false,
+		resizable: false,
+		height: 200,
+		width: 200
+	})
+
+	settingsWindow.loadURL(`file://${__dirname}/app/settings.html`)
+	
+	settingsWindow.on('closed', () => {
+		settingsWindow = null
+	})
+})
+
+ipcMain.on('close-settings-window', () => {
+	if (settingsWindow) {
+	    settingsWindow.close();
+    }
+})
