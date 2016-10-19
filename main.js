@@ -13,5 +13,5 @@ app.on('ready', function(){
 	});
 
 	//mainWindow.loadURL('file:///home/david/Desktop/project1019/index.html')
-	mainWindow.loadURL(`file://${__dirname}/index.html`)
+	mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 })
