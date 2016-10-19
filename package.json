@@ -1,14 +1,15 @@
 {
-	"name": "project1019",
-	"version": "1.0.0",
-	"description": "A minimal Electron application",
-	"main": "main.js",
-	"scripts": {
-		"start": "electron ."
-	},
-	"devDependencies": {
-	    "electron": "^1.4.1"
-	}
+  "name": "project1019",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "nconf": "^0.8.4"
+  }
 }
-
-
