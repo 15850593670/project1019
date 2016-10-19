@@ -1,0 +1,14 @@
+{
+	"name": "project1019",
+	"version": "1.0.0",
+	"description": "A minimal Electron application",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron ."
+	},
+	"devDependencies": {
+	    "electron": "^1.4.1"
+	}
+}
+
+
