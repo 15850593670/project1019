@@ -19,7 +19,7 @@ function prepareButton(buttonEl, soundName) {
 	});
 }
 
-const {ipcRenderer} = require('electron')
+const {ipcRenderer, remote} = require('electron')
 
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', () => {
@@ -35,3 +35,36 @@ var settingsEl = document.querySelector('.settings');
 settingsEl.addEventListener('click', () => {
 	    ipcRenderer.send('open-settings-window');
 });
+
+var {Menu, Tray} = remote
+var path = require('path');
+
+var trayIcon = null;
+
+if (process.platform === 'darwin') {
+    trayIcon = new Tray(path.join(__dirname, 'img/tray-iconTemplate.png'));
+}
+else {
+    trayIcon = new Tray(path.join(__dirname, 'img/tray-icon-alt.png'));
+}
+
+var trayMenuTemplate = [
+    {
+        label: 'Sound machine',
+        enabled: false
+    },
+    {
+        label: 'Settings',
+        click: () => {
+            ipcRenderer.send('open-settings-window');
+        }
+    },
+    {
+        label: 'Quit',
+        click: () => {
+            ipcRenderer.send('close-main-window');
+        }
+    }
+];
+var trayMenu = Menu.buildFromTemplate(trayMenuTemplate);
+trayIcon.setContextMenu(trayMenu);
