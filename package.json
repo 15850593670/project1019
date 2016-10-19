@@ -11,5 +11,9 @@
   },
   "dependencies": {
     "nconf": "^0.8.4"
+  },
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager ./ SoundMachine --all --out ~/Desktop/SoundMachine --version 0.30.2 --overwrite --icon=./app/img/app-icon.icns"
   }
 }
