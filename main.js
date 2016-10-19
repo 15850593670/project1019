@@ -17,3 +17,9 @@ app.on('ready', function(){
 	//mainWindow.loadURL('file:///home/david/Desktop/project1019/index.html')
 	mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 })
+
+var ipcMain = electron.ipcMain
+
+ipcMain.on('close-main-window', function(){
+	app.quit();
+})

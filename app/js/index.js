@@ -18,3 +18,10 @@ function prepareButton(buttonEl, soundName) {
 	audio.play();
 	});
 }
+
+const {ipcRenderer} = require('electron')
+
+var closeEl = document.querySelector('.close');
+closeEl.addEventListener('click', function(){
+	ipcRenderer.send('close-main-window');
+})
