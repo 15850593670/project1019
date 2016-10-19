@@ -13,7 +13,7 @@ function prepareButton(buttonEl, soundName) {
 	buttonEl.querySelector('span').style.backgroundImage = 'url("img/icons/' + soundName + '.png")';
 
 	var audio = new Audio(__dirname + '/wav/' + soundName + '.wav');
-	buttonEl.addEventListener('click', function () {
+	buttonEl.addEventListener('click', () => {
 	audio.currentTime = 0;
 	audio.play();
 	});
@@ -22,6 +22,11 @@ function prepareButton(buttonEl, soundName) {
 const {ipcRenderer} = require('electron')
 
 var closeEl = document.querySelector('.close');
-closeEl.addEventListener('click', function(){
+closeEl.addEventListener('click', () => {
 	ipcRenderer.send('close-main-window');
+})
+
+ipcRenderer.on('global-shortcut', (event, arg) => {
+	var eve = new MouseEvent('click')
+	soundButtons[arg].dispatchEvent(eve)
 })
