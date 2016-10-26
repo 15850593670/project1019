@@ -15,24 +15,16 @@ app.on('ready', () => {
 	}
 
 	mainWindow = new BrowserWindow({
-		frame: false,
+		frame: true,
 		resizable: false,
 		height: 700,
-		width: 368
-	})
+		//width: 368
+		width:1000
+	})		
+	mainWindow.webContents.openDevTools()
 
-	/*
-	globalShortcut.register('X', () => {
-		mainWindow.webContents.send('global-shortcut', 0);
-    })
-
-	globalShortcut.register('Z', () => {
-	    mainWindow.webContents.send('global-shortcut', 1);
-    })
-	*/
-
-	//mainWindow.loadURL('file:///home/david/Desktop/project1019/index.html')
 	mainWindow.loadURL(`file://${__dirname}/app/index.html`)
+	setGlobalShortcuts()
 })
 
 function setGlobalShortcuts() {
@@ -77,6 +69,36 @@ ipcMain.on('open-settings-window', () => {
 ipcMain.on('close-settings-window', () => {
 	if (settingsWindow) {
 	    settingsWindow.close();
+    }
+	if (infosWindow) {
+	    infosWindow.close();
+    }
+})
+
+let infosWindow = null
+
+ipcMain.on('open-infos-window', () => {
+	if(infosWindow){
+		return
+	}
+
+	infosWindow = new BrowserWindow({
+		frame: false,
+		resizable: false,
+		height: 200,
+		width: 350
+	})
+
+	infosWindow.loadURL(`file://${__dirname}/app/info.html`)
+	
+	infosWindow.on('closed', () => {
+		infosWindow = null
+	})
+})
+
+ipcMain.on('close-infos-window', () => {
+	if (infosWindow) {
+	    infosWindow.close();
     }
 })
 

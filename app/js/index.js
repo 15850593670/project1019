@@ -36,6 +36,11 @@ settingsEl.addEventListener('click', () => {
 	    ipcRenderer.send('open-settings-window');
 });
 
+var infosEl = document.querySelector('.infos');
+infosEl.addEventListener('click', () => {
+	    ipcRenderer.send('open-infos-window');
+});
+
 var {Menu, Tray} = remote
 var path = require('path');
 

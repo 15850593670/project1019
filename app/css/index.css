@@ -88,6 +88,7 @@ body {
     -webkit-app-region: no-drag;
 }
 
+.infos,
 .settings,
 .close {
     cursor: pointer;
@@ -100,6 +101,12 @@ body {
     z-index: 1;
 
     -webkit-app-region: no-drag;
+}
+
+.infos {
+    background: transparent url('../img/info.png') no-repeat 4px 4px;
+    background-size: 24px 24px;
+    right: 70px;
 }
 
 .settings {
