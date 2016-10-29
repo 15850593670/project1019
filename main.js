@@ -118,7 +118,11 @@ ipcMain.on('set-global-shortcuts', () => {
 let notifier = require('node-notifier');
 
 ipcMain.on("notify-sound-name", (eventm, soundname) => {
-	notifier.notify(`playing: ${soundname}`);
+	notifier.notify({
+		title: 'Playing :',
+		message: `${soundname}`,
+		icon: `${__dirname}/app/img/app-icon.png`
+	})
 })
 
 
@@ -129,12 +133,12 @@ notifier.notify({
 });*/
 //show file select dialog
 ipcMain.on("select-music-from-local", (event, index) => {
-	notifier.notify('1'+ index)
+
 	const mp = dialog.showOpenDialog({
 			properties: ['openFile']
 	})
 	if(mp){
 		saveMusicList(index, mp)
 	}
-	event.sender.send('select-music-from-local-reply', index, mp ? true : false)
+	//event.sender.send('select-music-from-local-reply', index, mp ? true : false)
 })

@@ -7,6 +7,8 @@ var audios = []
 const configuration = require('../configuration.js')
 let musicList = configuration.readSettings('musicList')
 
+let musicToPlay = 0
+
 for (var i = 0; i < soundButtons.length; i++) {
 	var soundButton = soundButtons[i];
 	var soundName = soundButton.attributes['data-sound'].value;
@@ -17,27 +19,48 @@ for (var i = 0; i < soundButtons.length; i++) {
     else{
         musicname = musicList[i]
     }
-    let audio = new Audio(musicname)
-    audios.push(audio)
+    //let audio = new Audio(musicname)
+    //audios.push(audio)
 	prepareButton(soundButton, soundName, i);
 }
 
 function prepareButton(buttonEl, soundName, index) {
 	buttonEl.querySelector('span').style.backgroundImage = 'url("img/icons/' + soundName + '.png")';
 
-    setMusicForButton(index)
+    //setMusicForButton(index)
+    buttonEl.addEventListener('click', ()=>{
+        musicToPlay = index
+        playMusic()
+    })
     buttonEl.addEventListener('contextmenu', () => {
         ipcRenderer.send('select-music-from-local', index)
         return false
     })
 }
-function stopAllMusic(){
+function playMusic(){
     for(var i = 0;i < audios.length;i++){
         audios[i].pause()
         audios[i].currentTime = 0
     }
-}
 
+    musicList = configuration.readSettings('musicList')
+    let musicname = null
+    if(musicList[musicToPlay] === '1'){
+        let soundName = soundButton.attributes['data-sound'].value;
+        musicname = __dirname + '/wav/' + soundName + '.wav';
+    }
+    else{
+        musicname = musicList[musicToPlay]
+    }
+
+    let audio = new Audio(musicname)
+    audios.push(audio)
+    var mn = musicname.substring(musicname.lastIndexOf('/') + 1)
+    ipcRenderer.send('notify-sound-name', mn)
+    audio.currentTime = 0;
+	audio.play();
+}
+/*
 function setMusicForButton(index){
     let button = soundButtons[index]
     musicList = configuration.readSettings('musicList')
@@ -51,20 +74,22 @@ function setMusicForButton(index){
     else{
         musicname = musicList[index]
     }
-    audios[index] = new Audio(musicname)
+    let audio = new Audio(musicname)
+    audios.push(audio)
     var mn = musicname.substring(musicname.lastIndexOf('/') + 1)
     button.addEventListener('click', ()=>{
-        stopAllMusic()
-        audios[index].currentTime = 0;
-	    audios[index].play();
         ipcRenderer.send('notify-sound-name', mn)
+        stopAllMusic()
+        audio.currentTime = 0;
+	    audio.play();
+        
     })
-}
+}*/
 
 //reset the music played by a button
 ipcRenderer.on('select-music-from-local-reply', (event, index, success) => {
 	if(success){
-        setMusicForButton(index)
+        //setMusicForButton(index)
     }
 })
 
